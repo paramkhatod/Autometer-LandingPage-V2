@@ -1,9 +1,8 @@
-import React from 'react'; // Assuming this is a React component
+import React from 'react';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // Define your navigation sections with specific links
   const footerNavigation = [
     {
       title: 'Product',
@@ -16,17 +15,17 @@ function Footer() {
     {
       title: 'Resources',
       links: [
-        { name: 'Blog', href: '/blog' }, // Added a blog link as a common resource
-        { name: 'Documentation', href: '/docs' },
-        { name: 'GitHub', href: 'https://github.com/your-repo' }, // Replace with your actual GitHub URL
+        { name: 'Blog', href: '/blog' },
+        { name: 'Documentation', href: '/docs' }, // <-- FIX: Removed the extra 'L'
+        { name: 'GitHub', href: 'https://github.com/your-repo' },
       ],
     },
     {
-      title: 'Company', // Changed from "Getting Started" to "Company" for a broader category
+      title: 'Company',
       links: [
         { name: 'About Us', href: '/about' },
         { name: 'Contact Us', href: '/contact' },
-        { name: 'Careers', href: '/careers' }, // Added careers as a common company link
+        { name: 'Careers', href: '/careers' },
       ],
     },
     {
@@ -39,14 +38,20 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0A1121] text-gray-300 py-12 px-6 lg:px-12">
+    // This is our light-themed footer from before
+    <footer className="bg-rose-100 text-gray-700 py-12 px-6 lg:px-12 border-t border-rose-200">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
         {/* Logo and Tagline Section */}
         <div className="col-span-1 md:col-span-2 lg:col-span-1 flex flex-col items-start">
           <a href="/" className="mb-4">
-            <img src="/logo1.png" alt="Automater Logo" className="w-[100px] h-[100px]" /> {/* Changed logo source */}
+          <img 
+    src="/logo1.png" 
+    alt="logo Automater" 
+    className="w-20 h-20 transition-all duration-300"
+    style={{ filter: 'grayscale(100%) brightness(0%)' }} // <-- Add this style
+/>
           </a>
-          <p className="text-sm pt-2 text-gray-400">
+          <p className="text-sm pt-2 text-gray-600">
             Streamline your workflows with powerful automation.
           </p>
         </div>
@@ -54,7 +59,7 @@ function Footer() {
         {/* Dynamic Navigation Sections */}
         {footerNavigation.map((section, index) => (
           <div key={index} className="col-span-1">
-            <h3 className="text-lg font-semibold text-white mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
               {section.title}
             </h3>
             <ul className="space-y-2">
@@ -62,7 +67,7 @@ function Footer() {
                 <li key={linkIndex}>
                   <a
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                    className="text-gray-600 hover:text-pink-600 transition-colors duration-200"
                   >
                     {link.name}
                   </a>
@@ -74,7 +79,7 @@ function Footer() {
       </div>
 
       {/* Copyright Section */}
-      <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-500 text-sm">
+      <div className="border-t border-rose-200 mt-12 pt-8 text-center text-gray-500 text-sm">
         <p>&copy; {currentYear} Automater. All rights reserved.</p>
       </div>
     </footer>

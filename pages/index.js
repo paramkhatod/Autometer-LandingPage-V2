@@ -1,5 +1,6 @@
+// pages/index.js (or wherever your Home component is)
 import Head from 'next/head'
-import HeroSection from '../components/HeroSection'
+import HeroSection from '../components/HeroSection' // Assuming Banner is your HeroSection
 import Benefit from '../components/benefit'
 import HeroNext from '../components/HeroNext'
 import Footer from '../components/footer'
@@ -8,29 +9,29 @@ import Newsletter from '../components/newsletter'
 import Fetures from '../components/fetures'
 import Review from '../components/review'
 import Scrolling from '../components/scrollIng'
-import CustomCursor from '../components/CustomCursor.tsx'
+
 
 export default function Home() {
   return (
-    <div className="font-Poppins">
+    /* Removed font-Poppins, now handled by globals.css */
+    <div> 
       <Head>
         <title>Automater - Home</title>
-        {/* CORRECTED LINE BELOW */}
-        <link rel="icon" href="/logo1.png" /> 
+        <link rel="icon" href="/logo1.png" />
       </Head>
-      <CustomCursor />
-      <header className='w-full pb-20 md:pb-32 bg-gradient-to-t from-sky-500 to-purple-500'>
-    <Navbar />
-    <HeroSection />
-</header>
+      {/* This pink gradient header is perfect for the new theme */}
+      <header className='w-full pb-20 md:pb-32 bg-gradient-to-t from-pink-300 to-rose-200 text-gray-800'> 
+        <Navbar />
+        <HeroSection /> 
+      </header>
 
       <article>
         <HeroNext />
         <Benefit />
         <Scrolling />
-        <Fetures />
+        <Fetures  />
         <Review />
-        <Newsletter />
+        <Newsletter/>
       </article>
 
       <footer>

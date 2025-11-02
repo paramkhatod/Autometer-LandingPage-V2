@@ -1,10 +1,13 @@
-import { CheckIcon } from '@heroicons/react/solid'
+"use client"; // Added this for best practice
+
+import { CheckIcon } from '@heroicons/react/solid' // This icon isn't used here, but was in your original file
 import { useEffect } from 'react'
 import AnimScroll from "./animScroll"
 import InfiniteScroll from './InfiniteScroll';
 
 function Scroll() {
 
+    // The 'data' array (not used by the scroll, but part of the original file)
     let data = [
         {
             id: 1,
@@ -24,6 +27,9 @@ function Scroll() {
     ]
 
     
+    // THIS IS THE FIX: 
+    // This variable was mistakenly removed in my last response. 
+    // It is now back where it belongs, inside the 'Scroll' component.
     const infiniteScrollItems = [
         
         { content: <div className="p-4 bg-gray-700 text-white rounded-lg mb-4 shadow-lg w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">Automate homework tracking</div> },
@@ -42,24 +48,24 @@ function Scroll() {
     }, []) 
 
     return (
-        <div className="w-full h-[1000px] text-white relative overflow-hidden bg-#040D21"> 
+        // This retains our theme change from rose-950
+        <div className="w-full h-[1000px] text-white relative overflow-hidden bg-rose-950"> 
             <div className="relative z-10 w-full px-0 md:px-32 lg:px-12 xl:px-0 mx-auto h-full flex flex-col justify-center items-center">
                 
-                {/* Title adjusted to be visible over the scrolling content if it's not part of the scroll */}
                 <h2 className="title2 text-3xl md:text-8xl text-center font-semibold leading-tight md:leading-relaxed mb-10 mt-6">
                 Built for education
                 </h2>
 
-                {/* InfiniteScroll component now takes full width and 100% of remaining height */}
                 <div style={{ height: 'calc(100% - 100px)' /* Adjust 100px based on title height */, width: '100%' }} className="flex flex-col items-center">
                     <InfiniteScroll
-                        items={infiniteScrollItems}
+                        items={infiniteScrollItems} // This will now work
                         isTilted={true} 
                         tiltDirection='left'
                         autoplay={true}
-                        autoplaySpeed={0.03} // Even faster scroll
+                        autoplaySpeed={0.03}
                         autoplayDirection="down"
                         pauseOnHover={true}
+                        gradientColor="#4c0519" // This prop also stays
                     />
                 </div>
             </div>

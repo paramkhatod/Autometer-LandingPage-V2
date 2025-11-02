@@ -3,17 +3,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { gsap } from 'gsap';
+// We use direct links now, so 'blogs' import is not needed
 
 function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // 1. Add state to track if the page is scrolled
-    const [isScrolled, setIsScrolled] = useState(false);
+    // THIS LINE IS LIKELY MISSING:
+    const [isScrolled, setIsScrolled] = useState(false); 
     
     const logoRef = useRef(null);
     const menuItemsRef = useRef(null);
     const getStartedBtnRef = useRef(null);
 
-    // GSAP animations for initial load (no changes here)
+    // GSAP animations for initial load
     useEffect(() => {
         gsap.from(logoRef.current, {
             duration: 0.8, opacity: 0, y: -20, ease: 'power3.out', delay: 0.2,
@@ -26,10 +27,10 @@ function Navbar() {
         });
     }, []);
 
-    // 2. Add useEffect to handle scroll events
+    // Add useEffect to handle scroll events
     useEffect(() => {
         const handleScroll = () => {
-            // Set state to true if scroll position is greater than 10px, else false
+            // This 'setIsScrolled' function comes from the useState hook
             setIsScrolled(window.scrollY > 10);
         };
 
@@ -43,40 +44,45 @@ function Navbar() {
     }, []); // Empty dependency array ensures this runs only once
 
     return (
-        // 3. Conditionally apply classes for sticky behavior and padding
         <nav 
-    className={`w-full 2xl:w-large px-6 lg:px-28 2xl:px-0 mx-auto z-50 transition-colors duration-300 ${
-        isScrolled 
-        ? 'fixed top-0 left-0 right-0 pt-3 pb-1 lg:pt-3 bg-gray-900 shadow-xl' 
-        : 'pt-6 lg:pt-10'
-    }`}
->
+            className={`w-full 2xl:w-large px-6 lg:px-28 2xl:px-0 mx-auto z-50 transition-colors duration-300 ${
+                isScrolled // This variable is defined by the useState hook
+                ? 'fixed top-0 left-0 right-0 pt-3 pb-1 lg:pt-3 bg-pink-100/90 backdrop-blur-md shadow-lg' 
+                : 'pt-6 lg:pt-10'
+            }`}
+        >
             <div className="flex justify-between items-center">
                 {/* Logo */}
                 <div ref={logoRef} className="w-auto">
-    <a href="#">
-        <img 
-            src="/logo1.png" 
-            alt="logo Automater" 
-            className="w-20 h-20 transition-all duration-300" 
-        />
-    </a>
-</div>
+                    <a href="/">
+                    <img 
+                        src="/logo1.png" 
+                        alt="logo Automater" 
+                        className="w-20 h-20 transition-all duration-300"
+                        style={{ filter: 'grayscale(100%) brightness(0%)' }} // <-- Add this style
+                    />
+                    </a>
+                </div>
 
                 {/* Desktop Menu */}
-                <ul ref={menuItemsRef} className="list-none text-white hidden xl:flex items-center">
-                    {/* Menu items remain the same */}
-                    <li className="px-6"><a className="hover:text-gray-200 transition-all" href="#">Home</a></li>
-                    <li className="px-6"><a className="hover:text-gray-200 transition-all" href="#">Benefits</a></li>
-                    <li className="px-6"><a className="hover:text-gray-200 transition-all" href="#">Feature</a></li>
-                    <li className="px-6"><a className="hover:text-gray-200 transition-all" href="#">Review</a></li>
-                    <li className="px-6"><a className="hover:text-gray-200 transition-all" href="#">Newsletter</a></li>
+                <ul ref={menuItemsRef} className="list-none text-gray-800 hidden xl:flex items-center">
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="/">Home</a></li>
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="/blogs">Blogs</a></li>
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="/policies">Policies</a></li>
+                    
+                    {/* --- ADD THIS NEW LINE --- */}
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="/terms">Terms</a></li>
+                    
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="#">Feature</a></li>
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="#">Review</a></li>
+                    <li className="px-6"><a className="hover:text-pink-600 transition-all" href="#">Newsletter</a></li>
                 </ul>
 
                 {/* Desktop "Get Started" Button */}
                 <div ref={getStartedBtnRef} className="hidden xl:block">
-                    {/* 5. Conditionally change button size for better alignment */}
-                    <button className={`bg-btnDark text-white w-44 font-medium rounded-lg hover:shadow-xl transition-all duration-300 ${isScrolled ? 'h-14' : 'h-14'}`}>
+                    <button className={`bg-btnDark text-white w-44 font-medium rounded-lg hover:shadow-xl transition-all duration-300 ${
+                        isScrolled ? 'h-14' : 'h-14' // This also uses the 'isScrolled' variable
+                        }`}>
                         Get started
                     </button>
                 </div>
@@ -84,15 +90,26 @@ function Navbar() {
                 {/* Mobile Menu Button */}
                 <div className="block xl:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className='pt-1'>
-                        {isMenuOpen ? <XIcon className='w-8 text-white' /> : <MenuIcon className='w-8 text-white' />}
+                        {isMenuOpen ? <XIcon className='w-8 text-gray-800' /> : <MenuIcon className='w-8 text-gray-800' />}
                     </button>
                 </div>
             </div>
 
             {/* Mobile Menu Dropdown */}
             {isMenuOpen && (
-                <div className="xl:hidden mt-4 bg-gray-800 rounded-lg">
-                    {/* ... (mobile menu content) ... */}
+                <div className="xl:hidden mt-4 bg-white/90 rounded-lg p-4">
+                     <ul className="list-none text-gray-800 flex flex-col items-center">
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/">Home</a></li>
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/blogs">Blogs</a></li>
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/policies">Policies</a></li>
+                        
+                        
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/terms">Terms</a></li>
+                        
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/#feature">Feature</a></li>
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/#review">Review</a></li>
+                        <li className="py-2"><a className="hover:text-pink-600 transition-all" href="/#newsletter">Newsletter</a></li>
+                    </ul>
                 </div>
             )}
         </nav>

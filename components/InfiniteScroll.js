@@ -4,9 +4,11 @@ import { Observer } from 'gsap/Observer';
 
 gsap.registerPlugin(Observer);
 
+// THIS IS THE FIX:
+// All props, including 'maxHeight', are now correctly destructured here.
 export default function InfiniteScroll({
   width = '30rem',
-  maxHeight = '100%',
+  maxHeight = '100%', // <-- This prop is now included
   negativeMargin = '-0.5em',
   items = [],
   itemMinHeight = 150,
@@ -15,6 +17,7 @@ export default function InfiniteScroll({
   autoplay = false,
   autoplaySpeed = 0.5,
   autoplayDirection = 'down',
+  gradientColor = "#040D21", // This is the prop we added
   pauseOnHover = false
 }) {
   const wrapperRef = useRef(null);
@@ -123,12 +126,13 @@ export default function InfiniteScroll({
 
   return (
     <div
-      className="relative flex items-center justify-center w-full overflow-hidden overscroll-none  bg-gradient"
+      className="relative flex items-center justify-center w-full overflow-hidden overscroll-none"
       ref={wrapperRef}
-      style={{ maxHeight }}
+      // This style attribute will now work correctly
+      style={{ maxHeight, background: gradientColor }}
     >
-      <div className="absolute top-0 left-0 w-full h-1/4 bg-gradient-to-b from-[#040D21] to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-[#040D21] from-20% to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-1/4 z-10 pointer-events-none" style={{ background: `linear-gradient(to bottom, ${gradientColor} 0%, transparent 100%)` }}></div>
+      <div className="absolute bottom-0 left-0 w-full h-1/4 z-10 pointer-events-none" style={{ background: `linear-gradient(to top, ${gradientColor} 20%, transparent 100%)` }}></div>
       <div
         className="flex flex-col overscroll-contain px-4 cursor-grab origin-center"
         ref={containerRef}
